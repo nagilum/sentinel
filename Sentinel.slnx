@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="SentinelDashboard/SentinelDashboard.csproj" />
+  <Project Path="SentinelData/SentinelData.csproj" />
+  <Project Path="SentinelScanner/SentinelScanner.csproj" />
+</Solution>
