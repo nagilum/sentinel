@@ -11,4 +11,5 @@ SentinelScanner/obj/
 
 *.user
 *.log
+*.db*
 
