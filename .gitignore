@@ -1,0 +1,14 @@
+.idea/
+
+SentinelDashboard/bin/
+SentinelDashboard/obj/
+
+SentinelData/bin/
+SentinelData/obj/
+
+SentinelScanner/bin/
+SentinelScanner/obj/
+
+*.user
+*.log
+
