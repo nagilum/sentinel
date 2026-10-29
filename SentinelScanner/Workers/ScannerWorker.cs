@@ -40,7 +40,7 @@ public class ScannerWorker(
             var assetType = asset.AssetType switch
             {
                 AssetType.Url => await sentinelDataService.GetAssetTypeUrl(asset.AssetTypeId, cancellationToken),
-                _ => throw new NotImplementedException($"Asset type {asset.AssetType} not implemented")
+                _ => throw new InvalidCastException($"Asset type {asset.AssetType} not implemented")
             };
 
             if (assetType is null)
@@ -55,8 +55,7 @@ public class ScannerWorker(
                     break;
             
                 default:
-                    throw new NotImplementedException(
-                        $"Asset type {asset.AssetType} not implemented");
+                    throw new InvalidCastException($"Asset type {asset.AssetType} not implemented");
             }
 
             asset.Updated = DateTime.UtcNow;
