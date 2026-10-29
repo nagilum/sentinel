@@ -62,8 +62,12 @@ public class ScannerWorker(
             asset.Updated = DateTime.UtcNow;
             asset.LastScan = DateTime.UtcNow;
             asset.NextScan = DateTime.UtcNow.AddMinutes(3);
-            
-            await sentinelDataService.SaveAsset(asset, cancellationToken);
+
+            await sentinelDataService.SaveAsset(
+                asset,
+                cancellationToken.IsCancellationRequested
+                    ? CancellationToken.None
+                    : cancellationToken);
         }
         catch (Exception ex)
         {
@@ -147,6 +151,10 @@ public class ScannerWorker(
             urlResponse.ErrorMessage = ex.Message[..Math.Min(ex.Message.Length, 256)];
         }
 
-        await sentinelDataService.SaveAssetTypeUrlResponse(urlResponse, cancellationToken);
+        await sentinelDataService.SaveAssetTypeUrlResponse(
+            urlResponse,
+            cancellationToken.IsCancellationRequested
+                ? CancellationToken.None
+                : cancellationToken);
     }
 }
