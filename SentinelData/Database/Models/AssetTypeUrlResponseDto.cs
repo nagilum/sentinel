@@ -40,6 +40,9 @@ public class AssetTypeUrlResponseDto : IAssetTypeUrlResponseDto
     public bool? Timeout { get; set; }
 
     [Column]
+    public bool? SslError { get; set; }
+
+    [Column]
     [MaxLength(64)]
     public string? ErrorType { get; set; }
     

@@ -20,6 +20,8 @@ public interface IAssetTypeUrlResponseDto
     
     bool? Timeout { get; set; }
     
+    bool? SslError { get; set; }
+    
     string? ErrorType { get; set; }
     
     string? ErrorMessage { get; set; }

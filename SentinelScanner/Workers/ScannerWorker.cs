@@ -94,6 +94,7 @@ public class ScannerWorker(
             urlResponse.StatusDescription = res.ReasonPhrase?[..Math.Min(res.ReasonPhrase.Length, 64)];
             urlResponse.TimeMilliseconds = watch.ElapsedMilliseconds;
             urlResponse.Timeout = false;
+            urlResponse.SslError = false;
 
             urlResponse.Size = res.Content.Headers.ContentLength;
 
@@ -114,7 +115,7 @@ public class ScannerWorker(
             {
                 headers.TryAdd(key, value.FirstOrDefault());
             }
-            
+
             foreach (var (key, value) in res.TrailingHeaders)
             {
                 headers.TryAdd(key, value.FirstOrDefault());
@@ -130,6 +131,13 @@ public class ScannerWorker(
         catch (TaskCanceledException) when (!cancellationToken.IsCancellationRequested)
         {
             urlResponse.Timeout = true;
+        }
+        catch (HttpRequestException ex) when (ex.HttpRequestError is HttpRequestError.SecureConnectionError)
+        {
+            urlResponse.SslError = true;
+
+            urlResponse.ErrorType = "SslError";
+            urlResponse.ErrorMessage = ex.Message[..Math.Min(ex.Message.Length, 256)];
         }
         catch (Exception ex) when (!cancellationToken.IsCancellationRequested)
         {
